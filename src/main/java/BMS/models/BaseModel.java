@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 abstract public class BaseModel {
     @Id // tell db that this is primary key
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private int id;
 
