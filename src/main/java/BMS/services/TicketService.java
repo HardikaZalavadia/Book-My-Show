@@ -34,14 +34,11 @@ public class TicketService {
     private TicketRepository ticketRepository;
     @Autowired
     private UserRepository userRepository;
-
-    private TicketPriceCalculator ticketPriceCalculator;
-
     @Autowired
     ShowSeatService showSeatService;
 
-//    @Autowired
-//    UserService userService;
+    private TicketPriceCalculator ticketPriceCalculator;
+
 
     @Autowired
     public TicketService(ShowRepository showRepository, ShowSeatRepository showSeatRepository,
@@ -83,9 +80,8 @@ public class TicketService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void checkAndLockSeat(List<Integer> showSeatIds) throws ShowSeatNotAvailableException {
 //     check availability of seat
-        //List<ShowSeat> showSeats = showSeatRepository.findAllByIdIn(showSeatIds);
+
         for(int showSeatId : showSeatIds){
-            //ShowSeat seat = showSeatService.getShowSeat(showSeatId);
             ShowSeat seat = showSeatRepository.findShowSeatById(showSeatId);
             if(!seat.getShowSeatStatus().equals(ShowSeatStatus.AVAILABLE)) {
                 throw new ShowSeatNotAvailableException("Seat is not available");
@@ -93,11 +89,9 @@ public class TicketService {
         }
 //      updating seat status
         for(int showSeatId : showSeatIds){
-            //ShowSeat seat = showSeatService.getShowSeat(showSeatId);
             ShowSeat seat = showSeatRepository.findShowSeatById(showSeatId);
             seat.setShowSeatStatus(ShowSeatStatus.LOCKED);
             showSeatRepository.save(seat);
-            //showSeatService.saveShowSeat(seat);
         }
 
     }
@@ -106,13 +100,6 @@ public class TicketService {
         if(savedUser==null){
             throw new UserNotFoundException("User is not Found");
         }
-//        List<Ticket> tickets = new ArrayList<>();
-//        for(int ticketId : ticketIds){
-//            Ticket ticket = ticketRepository.findTicketById(ticketId);
-//            tickets.add(ticket);
-//        }
-        //savedUser.setTickets(tickets);
-        //userRepository.save(savedUser);
         return savedUser.getTickets();
     }
 }

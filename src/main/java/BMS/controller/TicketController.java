@@ -39,8 +39,6 @@ public class TicketController {
     }
     @GetMapping("/genticket/{Id}")
     public ResponseEntity generateTicket(@PathVariable("Id") int userId){
-        //List<Integer> ticketIds = ticketRequestDTO.getTicketId();
-        //int userId = ticketRequestDTO.getUserId();
 
         List<Ticket> tickets = ticketService.generateTicket(userId);
         TicketResponseDTO ticketResponseDTO = new TicketResponseDTO();
@@ -71,7 +69,6 @@ public class TicketController {
 
         ticketResponseDTO.setUserId(userId);
         ticketResponseDTO.setTicketForUsers(userTicket);
-        //List<TicketForUser> ticketResponseDTO.getTicketForUsers();
 
         return ResponseEntity.ok(ticketResponseDTO);
     }
